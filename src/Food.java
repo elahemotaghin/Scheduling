@@ -6,6 +6,7 @@ public class Food  implements Comparable<Food>{
     private int arriveTime;
     private int remainingTime;
     private boolean isCooking;
+    private boolean isJustArrive = false;
 
     public Food(String foodName, int time, int deadline, int interval, int arriveTime){
         this.foodName = foodName;
@@ -13,15 +14,6 @@ public class Food  implements Comparable<Food>{
         this.deadline = deadline;
         this.interval = interval;
         this.arriveTime = arriveTime;
-        this.isCooking = false;
-        this.remainingTime = time;
-    }
-
-    public Food(String foodName, int time, int deadline, int interval){
-        this.foodName = foodName;
-        this.time = time;
-        this.deadline = deadline;
-        this.interval = interval;
         this.isCooking = false;
         this.remainingTime = time;
     }
@@ -54,6 +46,10 @@ public class Food  implements Comparable<Food>{
         return arriveTime;
     }
 
+    public boolean isJustArrive() {
+        return isJustArrive;
+    }
+
     public void updateRemainingTime() {
         this.remainingTime --;
     }
@@ -62,8 +58,8 @@ public class Food  implements Comparable<Food>{
         isCooking = cooking;
     }
 
-    public void setArriveTime(int arriveTime) {
-        this.arriveTime = arriveTime;
+    public void setJustArrive(boolean justArrive) {
+        isJustArrive = justArrive;
     }
 
     public void printFood(){
@@ -71,11 +67,48 @@ public class Food  implements Comparable<Food>{
         System.out.println("Time: " + this.getTime());
         System.out.println("Interval: " + this.getInterval());
         System.out.println("Deadline: " + this.getDeadline());
+        System.out.println("Remaining Time: " + this.getRemainingTime());
+    }
+    //deadline first
+    @Override
+    public int compareTo(Food o) {
+        if(o.isJustArrive())
+            return -1;
+        else if(this.isJustArrive())
+            return 1;
+        else if(o.isJustArrive() && this.isJustArrive || o.getInterval() == this.getInterval()) {
+            if (o.isCooking() && this.isCooking())
+                return this.getTime() - o.getTime();
+            else if (o.isCooking() && !this.isCooking())
+                return -1;
+            else if (!o.isCooking() && this.isCooking())
+                return 1;
+            else
+                return this.getTime() - o.getTime();
+        }
+        return this.getDeadline() - o.getDeadline();
     }
 
     //rate monotonic
+    /*
     @Override
     public int compareTo(Food o) {
+        if(o.isJustArrive())
+            return -1;
+        else if(this.isJustArrive())
+            return 1;
+        else if(o.isJustArrive() && this.isJustArrive || o.getInterval() == this.getInterval()) {
+            if (o.isCooking() && this.isCooking())
+                return this.getTime() - o.getTime();
+            else if (o.isCooking() && !this.isCooking())
+                return -1;
+            else if (!o.isCooking() && this.isCooking())
+                return 1;
+            else
+                return this.getTime() - o.getTime();
+        }
         return this.getInterval() - o.getInterval();
     }
+    */
+
 }

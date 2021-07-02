@@ -128,5 +128,6 @@ public class RateMonotonic{
                 break;
             }
         }
+        System.out.println("cookers rest time: " + restTime);
     }
 }
