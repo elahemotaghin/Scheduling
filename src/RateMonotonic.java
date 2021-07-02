@@ -86,14 +86,13 @@ public class RateMonotonic{
             boolean missPredict = isMissPredict(readyQueue);
             boolean deadlineMiss = isDeadlineMiss(readyQueue);
             boolean errorOccured = false;
-            while(currentTime < maximumTime && !isArrive && !deadlineMiss && !missPredict){
+            while(currentTime < maximumTime && !isArrive && !deadlineMiss && !missPredict && food.getRemainingTime()>0){
                 food.updateRemainingTime();
                 currentTime++;
                 manageIntervals();
+                System.out.println(currentTime + " " + food.getFoodName());
+                System.out.println("****");
                 if(food.getRemainingTime() == 0){
-                    System.out.println("Food is ready!!");
-                    food.printFood();
-                    System.out.println("****");
                     break;
                 }
                 else if(currentTime == food.getDeadline() + food.getArriveTime()){

@@ -20,13 +20,12 @@ public class Main {
                 foods.add(food);
                 maxTime = lcm(maxTime, food.getInterval());
             }
-            //System.out.println(maxTime);
-            /*for (int i = 0 ; i < 3 ; i++) {
-                foods.poll().printFood();
-            }*/
 
-            RateMonotonic rateMonotonic = new RateMonotonic(foods, maxTime);
-            rateMonotonic.scheduling();
+            //RateMonotonic rateMonotonic = new RateMonotonic(foods, maxTime);
+            //rateMonotonic.scheduling();
+
+            DeadlineFirst deadlineFirst = new DeadlineFirst(foods, maxTime);
+            deadlineFirst.scheduling();
         }
         catch (Exception e) {
             e.printStackTrace();

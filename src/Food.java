@@ -67,7 +67,7 @@ public class Food  implements Comparable<Food>{
         System.out.println("Time: " + this.getTime());
         System.out.println("Interval: " + this.getInterval());
         System.out.println("Deadline: " + this.getDeadline());
-        System.out.println("Remaining Time: " + this.getRemainingTime());
+        System.out.println("Remaining Time: " + (this.getRemainingTime()));
     }
     //deadline first
     @Override
