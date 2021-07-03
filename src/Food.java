@@ -72,9 +72,9 @@ public class Food  implements Comparable<Food>{
     //deadline first
     @Override
     public int compareTo(Food o) {
-        if(o.isJustArrive())
+        if(o.isJustArrive() && !this.isJustArrive())
             return -1;
-        else if(this.isJustArrive())
+        else if(this.isJustArrive() && !o.isJustArrive())
             return 1;
         else if(o.isJustArrive() && this.isJustArrive || o.getInterval() == this.getInterval()) {
             if (o.isCooking() && this.isCooking())
@@ -93,22 +93,21 @@ public class Food  implements Comparable<Food>{
     /*
     @Override
     public int compareTo(Food o) {
-        if(o.isJustArrive())
-            return -1;
-        else if(this.isJustArrive())
+        if(o.isJustArrive() && !this.isJustArrive())
             return 1;
+        else if(this.isJustArrive() && !o.isJustArrive())
+            return -1;
         else if(o.isJustArrive() && this.isJustArrive || o.getInterval() == this.getInterval()) {
             if (o.isCooking() && this.isCooking())
                 return this.getTime() - o.getTime();
             else if (o.isCooking() && !this.isCooking())
-                return -1;
-            else if (!o.isCooking() && this.isCooking())
                 return 1;
+            else if (!o.isCooking() && this.isCooking())
+                return -1;
             else
                 return this.getTime() - o.getTime();
         }
-        return this.getInterval() - o.getInterval();
-    }
-    */
-
+        else
+            return this.getInterval() - o.getInterval();
+    }*/
 }

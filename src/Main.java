@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 public class Main {
@@ -9,11 +8,12 @@ public class Main {
         int maxTime = 1;
         try{
             //load input file
-            File f1=new File("sample\\input.txt");
+            File f1=new File("sample\\input1.txt");
             FileReader fr = new FileReader(f1);
             BufferedReader br = new BufferedReader(fr);
             String fileLine;
             PriorityQueue<Food> foods = new PriorityQueue<>();
+            int foodNum = Integer.parseInt(br.readLine());
             while ((fileLine = br.readLine()) != null){
                 String[] foodInfo = fileLine.split(" ");
                 Food food = new Food(foodInfo[0], Integer.parseInt(foodInfo[1]), Integer.parseInt(foodInfo[2]), Integer.parseInt(foodInfo[3]), 0);
