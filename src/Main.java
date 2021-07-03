@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class Main {
@@ -13,19 +14,36 @@ public class Main {
             BufferedReader br = new BufferedReader(fr);
             String fileLine;
             PriorityQueue<Food> foods = new PriorityQueue<>();
-            int foodNum = Integer.parseInt(br.readLine());
+            int foodNumber = Integer.parseInt(br.readLine());
             while ((fileLine = br.readLine()) != null){
                 String[] foodInfo = fileLine.split(" ");
                 Food food = new Food(foodInfo[0], Integer.parseInt(foodInfo[1]), Integer.parseInt(foodInfo[2]), Integer.parseInt(foodInfo[3]), 0);
                 foods.add(food);
                 maxTime = lcm(maxTime, food.getInterval());
             }
+            //handle offers
+            Food[] foodsArray = new Food[foodNumber];
+            int u = 0;
+            for (int i = 0 ; i < foodNumber ; i++) {
+                foodsArray[i] = foods.poll();
+            }
+            foods.addAll(Arrays.asList(foodsArray).subList(0, foodNumber));
+            for (int i = 0; i < foodNumber; i++) {
+                u += foodsArray[i].getTime()/foodsArray[i].getInterval();
+            }
+            if(u >= 1){
+                System.out.println("cant handle!!!!");
+            }
+            else {
+                //RateMonotonic rateMonotonic = new RateMonotonic(foods, maxTime);
+                //rateMonotonic.scheduling();
 
-            //RateMonotonic rateMonotonic = new RateMonotonic(foods, maxTime);
-            //rateMonotonic.scheduling();
+                //DeadlineFirst deadlineFirst = new DeadlineFirst(foods, maxTime);
+                //deadlineFirst.scheduling();
 
-            DeadlineFirst deadlineFirst = new DeadlineFirst(foods, maxTime);
-            deadlineFirst.scheduling();
+                LeastLaxity leastLaxity = new LeastLaxity(foods, maxTime);
+                leastLaxity.scheduling();
+            }
         }
         catch (Exception e) {
             e.printStackTrace();

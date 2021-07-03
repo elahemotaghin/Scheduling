@@ -70,7 +70,7 @@ public class Food  implements Comparable<Food>{
         System.out.println("Remaining Time: " + (this.getRemainingTime()));
     }
     //deadline first
-    @Override
+    /*@Override
     public int compareTo(Food o) {
         if(o.isJustArrive() && !this.isJustArrive())
             return -1;
@@ -87,10 +87,9 @@ public class Food  implements Comparable<Food>{
                 return this.getTime() - o.getTime();
         }
         return this.getDeadline() - o.getDeadline();
-    }
+    }*/
 
     //rate monotonic
-    /*
     @Override
     public int compareTo(Food o) {
         if(o.isJustArrive() && !this.isJustArrive())
@@ -98,9 +97,7 @@ public class Food  implements Comparable<Food>{
         else if(this.isJustArrive() && !o.isJustArrive())
             return -1;
         else if(o.isJustArrive() && this.isJustArrive || o.getInterval() == this.getInterval()) {
-            if (o.isCooking() && this.isCooking())
-                return this.getTime() - o.getTime();
-            else if (o.isCooking() && !this.isCooking())
+            if (o.isCooking() && !this.isCooking())
                 return 1;
             else if (!o.isCooking() && this.isCooking())
                 return -1;
@@ -109,5 +106,23 @@ public class Food  implements Comparable<Food>{
         }
         else
             return this.getInterval() - o.getInterval();
+    }
+
+    //least laxity
+    /*@Override
+    public int compareTo(Food o) {
+        if(o.isJustArrive() && !this.isJustArrive())
+            return -1;
+        else if(this.isJustArrive() && !o.isJustArrive())
+            return 1;
+        else if(o.isJustArrive() && this.isJustArrive || o.getInterval() == this.getInterval()) {
+            if (o.isCooking() && !this.isCooking())
+                return -1;
+            else if (!o.isCooking() && this.isCooking())
+                return 1;
+            else
+                return this.getTime() - o.getTime();
+        }
+        return (this.getDeadline() - this.getTime()) - (o.getDeadline() - o.getTime());
     }*/
 }

@@ -1,9 +1,6 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
-public class RateMonotonic{
+public class LeastLaxity {
     private Queue<Food> readyQueue;
     private Food[] allFoods;
     private int currentTime = 0;
@@ -14,7 +11,7 @@ public class RateMonotonic{
     private Food missPredictedFood;
     private HashMap<String, Integer> waitingTimes = new HashMap<>();
 
-    public RateMonotonic(Queue<Food> readyQueue, int maximumTime) {
+    public LeastLaxity(Queue<Food> readyQueue, int maximumTime) {
         this.readyQueue = readyQueue;
         this.maximumTime = maximumTime;
         this.allFoods = foodArray(readyQueue);
@@ -49,17 +46,6 @@ public class RateMonotonic{
         readyQueue.addAll(Arrays.asList(foods));
     }
 
-    public void updateIsJustArrive(Queue<Food> readyQueue){
-        int foodNumber = readyQueue.size();
-        Food[] foods = new Food[foodNumber];
-        for (int i = 0 ; i < foodNumber ; i++) {
-            foods[i] = readyQueue.poll();
-            if(foods[i].getArriveTime() < currentTime)
-                foods[i].setJustArrive(false);
-        }
-        readyQueue.addAll(Arrays.asList(foods).subList(0, foodNumber));
-    }
-
     public void manageIntervals(){
         for (Food allFood : allFoods) {
             if (currentTime < maximumTime && currentTime % allFood.getInterval() == 0) {
@@ -69,6 +55,17 @@ public class RateMonotonic{
                 this.readyQueue.add(temp);
             }
         }
+    }
+
+    public void updateIsJustArrive(Queue<Food> readyQueue){
+        int foodNumber = readyQueue.size();
+        Food[] foods = new Food[foodNumber];
+        for (int i = 0 ; i < foodNumber ; i++) {
+            foods[i] = readyQueue.poll();
+            if(foods[i].getArriveTime() < currentTime)
+                foods[i].setJustArrive(false);
+        }
+        readyQueue.addAll(Arrays.asList(foods).subList(0, foodNumber));
     }
 
     public boolean isMissPredict(Queue<Food> readyQueue){
@@ -108,7 +105,7 @@ public class RateMonotonic{
     }
 
     public void scheduling(){
-        System.out.println("***Start Rate monotonic scheduling***");
+        System.out.println("***Start Least laxity scheduling***");
         if(!readyQueue.isEmpty()){
             readyQueue.add(readyQueue.poll());
             boolean missPredict = isMissPredict(readyQueue);
